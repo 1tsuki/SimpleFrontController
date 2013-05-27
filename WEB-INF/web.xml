@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+	<!-- project descriptions -->
+	<display-name>
+		SFCFramework
+	</display-name>
+	<description>
+		Simple Front Controller Framework
+		Using Command-pattern
+	</description>
+	<!-- end project descriptions -->
+	
+	<!-- system default -->
+	<filter>
+		<filter-name>LogFilter</filter-name>
+		<filter-class>com.astrider.sfc.filter.LogFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LogFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>FrontController</servlet-name>
+		<servlet-class>com.astrider.sfc.FrontController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/asset/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FrontController</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- end system default -->
+	
+	<!-- implement custom settings here -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</web-app>
