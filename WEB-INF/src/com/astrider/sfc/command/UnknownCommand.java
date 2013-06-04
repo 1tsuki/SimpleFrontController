@@ -5,18 +5,18 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 
 import com.astrider.sfc.FrontCommand;
-import com.astrider.sfc.helper.annotation.Page;
+import com.astrider.sfc.helper.annotation.Title;
 
-@Page("存在しないページ")
+@Title("存在しないページ")
 public class UnknownCommand extends FrontCommand {
 
     @Override
-    protected void processGet() throws ServletException, IOException {
+    protected void doGet() throws ServletException, IOException {
         render("/Unknown.jsp");
     }
 
     @Override
-    protected void processPost() throws ServletException, IOException {
+    protected void doPost() throws ServletException, IOException {
         render("/Unknown.jsp");
     }
 

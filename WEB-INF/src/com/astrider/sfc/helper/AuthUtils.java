@@ -19,7 +19,7 @@ public final class AuthUtils {
         return doStretching(password, salt).equals(encrypted);
     }
 
-    public static String generateSalt() {
+    private static String generateSalt() {
         return UUID.randomUUID().toString().substring(0, saltLength);
     }
 

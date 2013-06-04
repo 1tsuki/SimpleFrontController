@@ -20,6 +20,7 @@ public abstract class FrontCommand {
 
     public void init(HttpServletRequest request, HttpServletResponse response,
             ServletContext context) throws UnsupportedEncodingException {
+        System.out.println("front");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         this.request = request;
@@ -27,15 +28,15 @@ public abstract class FrontCommand {
         this.context = context;
     }
 
-    protected void processGet() throws ServletException, IOException {
+    protected void doGet() throws ServletException, IOException {
         redirect("/Unknown");
     }
 
-    protected void processPost() throws ServletException, IOException {
+    protected void doPost() throws ServletException, IOException {
         redirect("/Unknown");
     }
 
-    protected void registerError(String message) {
+    protected void addError(String message) {
         errorMessage.add(message);
     }
 
@@ -43,7 +44,7 @@ public abstract class FrontCommand {
         return 0 < errorMessage.size();
     }
 
-    protected boolean displayError(String previousCommand) throws IOException {
+    protected boolean showError(String previousCommand) throws IOException {
         if (hasError()) {
             HttpSession session = request.getSession();
             session.setAttribute("errorMessage", errorMessage);
@@ -54,8 +55,7 @@ public abstract class FrontCommand {
     }
 
     protected void render(String target) throws ServletException, IOException {
-        RequestDispatcher rd = context.getRequestDispatcher(VIEW_BASEPATH
-                + target);
+        RequestDispatcher rd = context.getRequestDispatcher(VIEW_BASEPATH + target);
         rd.forward(request, response);
     }
 

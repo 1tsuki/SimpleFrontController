@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.astrider.sfc.helper.annotation.Valid;
-import com.astrider.sfc.model.vo.BaseVO;
+import com.astrider.sfc.model.vo.BaseVo;
 
-public class Validator<T extends BaseVO> {
+public class Validator<T extends BaseVo> {
     private HashMap<String, String> errorMessage = new HashMap<String, String>();
     private T                       vo;
 
@@ -86,6 +86,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isNotBlank(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             String value = String.valueOf(f.get(vo));
             return StringUtils.isNotEmpty(value);
         } catch (ClassCastException e) {
@@ -99,6 +102,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isLength(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             String value = String.valueOf(f.get(vo));
             return v.length() == value.length();
         } catch (IllegalArgumentException e) {
@@ -110,6 +116,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isMinLength(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             String value = String.valueOf(f.get(vo));
             return v.minLength() <= value.length();
         } catch (IllegalArgumentException e) {
@@ -121,6 +130,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isMaxLength(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             String value = String.valueOf(f.get(vo));
             return value.length() <= v.maxLength();
         } catch (IllegalArgumentException e) {
@@ -132,6 +144,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isMin(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             int value = (Integer) f.get(vo);
             return v.min() <= value;
         } catch (IllegalArgumentException e) {
@@ -143,6 +158,9 @@ public class Validator<T extends BaseVO> {
 
     public boolean isMax(Field f, Valid v) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             int value = (Integer) f.get(vo);
             return value <= v.max();
         } catch (IllegalArgumentException e) {
@@ -153,7 +171,18 @@ public class Validator<T extends BaseVO> {
     }
 
     public boolean isRegexp(Field f, Valid v) {
-        return checkRegexp(f, v.regexp());
+        try {
+            if (f.get(vo) == null) {
+                return true;
+            }
+            return checkRegexp(f, v.regexp());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean isUrl(Field f, Valid v) {
@@ -173,6 +202,9 @@ public class Validator<T extends BaseVO> {
 
     private boolean checkRegexp(Field f, String regex) {
         try {
+            if (f.get(vo) == null) {
+                return true;
+            }
             String value = (String) f.get(vo);
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(value);

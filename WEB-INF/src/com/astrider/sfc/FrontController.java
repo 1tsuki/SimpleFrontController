@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.astrider.sfc.command.UnknownCommand;
 import com.astrider.sfc.helper.StringUtils;
-import com.astrider.sfc.helper.annotation.Page;
+import com.astrider.sfc.helper.annotation.Title;
 
 public class FrontController extends HttpServlet {
     private static final long serialVersionUID = -7412673150826768532L;
@@ -19,21 +19,21 @@ public class FrontController extends HttpServlet {
         FrontCommand command = getCommand(request);
         setPageTitle(request, command);
         command.init(request, response, getServletContext());
-        command.processGet();
+        command.doGet();
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         FrontCommand command = getCommand(request);
         setPageTitle(request, command);
         command.init(request, response, getServletContext());
-        command.processPost();
+        command.doPost();
     }
 
-    private void setPageTitle(HttpServletRequest request, FrontCommand command) {
-        Page page = command.getClass().getAnnotation(Page.class);
-        if (page != null && StringUtils.isNotEmpty(page.value())) {
+    protected void setPageTitle(HttpServletRequest request, FrontCommand command) {
+        Title title = command.getClass().getAnnotation(Title.class);
+        if (title != null && StringUtils.isNotEmpty(title.value())) {
             HttpSession session = request.getSession();
-            session.setAttribute("pageTitle", page.value());
+            session.setAttribute("pageTitle", title.value());
         }
     }
 
@@ -57,7 +57,7 @@ public class FrontController extends HttpServlet {
         return command;
     }
 
-    private String getCommandClassName(HttpServletRequest request) {
+    protected String getCommandClassName(HttpServletRequest request) {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getClass().getPackage().getName());
         sb.append(".command");

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <fileset-config file-format-version="1.2.0" simple-config="true" sync-formatter="false">
+  <local-check-config name="sante-checkstyle" location="R:\2013年新人ブートキャンプ\04_成果物\19_(サキツイツキ)佐橘一旗\04_開発ph\02_コーディング規約\sante-checkstyle.xml" type="external" description="">
+    <additional-data name="protect-config-file" value="false"/>
+  </local-check-config>
   <fileset name="すべて" enabled="true" check-config-name="Original Checks" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>

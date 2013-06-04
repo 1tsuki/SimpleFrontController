@@ -10,9 +10,9 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import com.astrider.sfc.helper.annotation.Column;
-import com.astrider.sfc.model.vo.BaseVO;
+import com.astrider.sfc.model.vo.BaseVo;
 
-public class Mapper<T extends BaseVO> {
+public class Mapper<T extends BaseVo> {
     private Class<T> type;
 
     @SuppressWarnings("unchecked")
@@ -121,7 +121,6 @@ public class Mapper<T extends BaseVO> {
                 if (t == boolean.class || t == Boolean.class)
                     f.set(vo, Boolean.valueOf(value));
             } catch (NumberFormatException e) {
-                // set null if cast failed
                 continue;
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

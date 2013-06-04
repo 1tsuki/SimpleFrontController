@@ -8,13 +8,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class BaseDAO {
+public class BaseDao {
     private final String localName = "java:comp/env/jdbc/testCon";
     private Context      context   = null;
     private DataSource   ds        = null;
     protected Connection con       = null;
 
-    public BaseDAO() {
+    public BaseDao() {
         try {
             context = new InitialContext();
             ds = (DataSource) context.lookup(localName);
