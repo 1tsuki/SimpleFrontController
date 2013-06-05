@@ -1,11 +1,15 @@
 package com.astrider.sfc.model.vo;
 
-import com.astrider.sfc.helper.annotation.Column;
-import com.astrider.sfc.helper.annotation.Valid;
+import com.astrider.sfc.lib.helper.annotation.Column;
+import com.astrider.sfc.lib.helper.annotation.Valid;
+import com.astrider.sfc.lib.model.vo.BaseVo;
 
 public class RecipeVo extends BaseVo {
     private static final long serialVersionUID = -5161857920063792063L;
 
+    @Column("recipe_id")
+    @Valid(isNotNull=true, isNotBlank=true, isMaxLength=true, maxLength=8)
+    private int recipeId;
     @Column("recipe_name")
     @Valid(isNotNull=true, isNotBlank=true, isMaxLength=true, maxLength=64)
     private String recipeName;
@@ -21,6 +25,12 @@ public class RecipeVo extends BaseVo {
     @Column("is_deleted")
     private boolean isDeleted;
 
+    public int getRecipeId() {
+        return recipeId;
+    }
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
     public String getRecipeName() {
         return recipeName;
     }

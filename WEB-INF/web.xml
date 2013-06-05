@@ -6,11 +6,10 @@
 
 	<!-- project descriptions -->
 	<display-name>
-		SFCFramework
+		sante
 	</display-name>
 	<description>
-		Simple Front Controller Framework
-		Using Command-pattern
+		sante
 	</description>
 	<!-- end project descriptions -->
 	
