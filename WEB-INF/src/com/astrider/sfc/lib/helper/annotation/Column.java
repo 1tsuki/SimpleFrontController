@@ -6,8 +6,16 @@ import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
+/**
+ * DBカラム/FormFieldNameを指定するアノテーション
+ * physicは物理名、logicはエラー出力等に利用する論理名
+ * @author 01002552
+ *
+ */
 @Target(FIELD)
 @Retention(RUNTIME)
 public @interface Column {
-    String value();
+    boolean isPrimaryKey() default false;
+    String physic();
+    String logic();
 }

@@ -9,5 +9,8 @@
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/ojdbc14_g.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/ojdbc14.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

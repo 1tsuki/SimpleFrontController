@@ -11,7 +11,3 @@
     </div>
   </body>
 </html>
-
-
-
-<% session.removeAttribute("pageTitle"); %>

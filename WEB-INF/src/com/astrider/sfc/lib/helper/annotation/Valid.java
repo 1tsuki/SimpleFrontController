@@ -6,6 +6,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
 
+/**
+ * Validator用アノテーション<br>
+ * isXX=true, XX=valueとして設定
+ * @author 01002552
+ *
+ */
 @Target(FIELD)
 @Retention(RUNTIME)
 public @interface Valid {

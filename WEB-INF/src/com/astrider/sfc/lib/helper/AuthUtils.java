@@ -2,6 +2,13 @@ package com.astrider.sfc.lib.helper;
 
 import java.util.UUID;
 
+/**
+ * 概要
+ *  ユーザー認証用ヘルパークラス
+ *  salt+SHA-512を用いたパスワードの暗号化とストレッチングを行う。
+ *  saltはパスワード文字列内の指定した位置にまぶされる。
+ *  @author Itsuki Sakitsu
+ */
 public final class AuthUtils {
     private static int   saltLength      = 10;
     private static int   stretchCount    = 100;
@@ -10,17 +17,26 @@ public final class AuthUtils {
     private AuthUtils() {
     }
 
+    /**
+     * @param パスワード
+     * @return 暗号化された文字列
+     */
     public static String encrypt(String password) {
         return doStretching(password, generateSalt());
     }
 
-    public static boolean verify(String password, String encrypted) {
-        String salt = extractSalt(encrypted);
-        return doStretching(password, salt).equals(encrypted);
+    /**
+     * @param 生パスワード
+     * @param 暗号化された文字列
+     * @return パスワードが一致したか否か
+     */
+    public static boolean verify(String password, String authToken) {
+        String salt = extractSalt(authToken);
+        return doStretching(password, salt).equals(authToken);
     }
 
     private static String generateSalt() {
-        return UUID.randomUUID().toString().substring(0, saltLength);
+        return StringUtils.getHash(UUID.randomUUID().toString()).substring(0, saltLength);
     }
 
     private static String doStretching(String password, String salt) {

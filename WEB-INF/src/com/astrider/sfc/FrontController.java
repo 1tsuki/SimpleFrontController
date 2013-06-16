@@ -2,61 +2,66 @@ package com.astrider.sfc;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.astrider.sfc.command.UnknownCommand;
+import com.astrider.sfc.app.command.UnknownCommand;
+import com.astrider.sfc.lib.Command;
 import com.astrider.sfc.lib.helper.StringUtils;
 import com.astrider.sfc.lib.helper.annotation.Title;
 
-/*
- * Front Controller
- *
- * ŠT—v
- *  ‘SCommand‚É‘Î‚·‚éƒAƒNƒZƒX‚Í‘S‚Ä‚±‚ÌƒNƒ‰ƒX‚©‚çU‚è•ª‚¯‚ç‚ê‚é
- *
- * ‹@”\
- *  å—v‹@”\
- *      EdoGet()    ’Êí‚ÌdoGetƒƒ\ƒbƒh
- *      EdoPost()   ’Êí‚ÌdoPostƒƒ\ƒbƒh
- *
- *  •›Ÿ‹@”\
- *      EsetPageTitle()     CommandƒNƒ‰ƒX‚ÉTitleƒAƒmƒe[ƒVƒ‡ƒ“‚ª•t‰Á‚³‚ê‚Ä‚¢‚½ê‡Asession‚ÉpageTitle—v‘f‚ğŠi”[
- *      EsetServletPath()   session‚Éservletpath‚ğŠi”[Bjsp“]‘—Œã‚ÌviewUtils—p
- *      EgetCommandName()   ƒŠƒNƒGƒXƒgURL‚ğCommand–¼‚É•ÏŠ·
- *      EgetCommand()       CommandƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬ACommand•sİ‚Ìê‡‚ÍUnknownCommand‚ÉƒŠƒ_ƒCƒŒƒNƒg
- */
 
+/**
+ * æ¦‚è¦<br>
+ *  å…¨Commandã«å¯¾ã™ã‚‹ã‚¢ã‚¯ã‚»ã‚¹ã¯å…¨ã¦ã“ã®ã‚¯ãƒ©ã‚¹ã‹ã‚‰æŒ¯ã‚Šåˆ†ã‘ã‚‰ã‚Œã‚‹<br>
+ *  åŒæ™‚ã«Commandã‚¯ãƒ©ã‚¹ã«Titleã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãŒç”¨æ„ã•ã‚Œã¦ã„ãŸå ´åˆã€è‡ªå‹•çš„ã«ãƒšãƒ¼ã‚¸ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¨­å®šã™ã‚‹ã€‚<br>
+ *<br>
+ * æ©Ÿèƒ½<br>
+ *  ä¸»è¦æ©Ÿèƒ½<br>
+ *      ãƒ»doGet()    é€šå¸¸ã®doGetãƒ¡ã‚½ãƒƒãƒ‰<br>
+ *      ãƒ»doPost()   é€šå¸¸ã®doPostãƒ¡ã‚½ãƒƒãƒ‰<br>
+ *<br>
+ *  å‰¯æ¬¡æ©Ÿèƒ½<br>
+ *      ãƒ»setPageTitle()     Commandã‚¯ãƒ©ã‚¹ã«Titleã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãŒä»˜åŠ ã•ã‚Œã¦ã„ãŸå ´åˆã€sessionã«pageTitleè¦ç´ ã‚’æ ¼ç´<br>
+ *      ãƒ»setServletPath()   sessionã«servletpathã‚’æ ¼ç´ã€‚jspè»¢é€å¾Œã®viewUtilsç”¨<br>
+ *      ãƒ»getCommandName()   ãƒªã‚¯ã‚¨ã‚¹ãƒˆURLã‚’Commandåã«å¤‰æ›<br>
+ *      ãƒ»getCommand()       Commandã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã€Commandä¸åœ¨ã®å ´åˆã¯UnknownCommandã«ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆ<br>
+ * @author Itsuki Sakitsu
+ *
+ */
 public class FrontController extends HttpServlet {
     private static final long serialVersionUID = -7412673150826768532L;
 
-    /*
-     * getƒŠƒNƒGƒXƒg
+    /**
+     * getãƒªã‚¯ã‚¨ã‚¹ãƒˆæ™‚
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = getCommand(request);
         setPageTitle(request, command);
         setServletPath(request);
-        command.init(request, response, getServletContext());
+        ServletContext context = getServletContext();
+        command.init(request, response, context);
         command.doGet();
     }
 
-    /*
-     * postƒŠƒNƒGƒXƒg
+    /**
+     * postãƒªã‚¯ã‚¨ã‚¹ãƒˆæ™‚
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = getCommand(request);
         setPageTitle(request, command);
         setServletPath(request);
-        command.init(request, response, getServletContext());
+        ServletContext context = getServletContext();
+        command.init(request, response, context);
         command.doPost();
     }
 
-    /*
-     * CommandƒNƒ‰ƒX‚ÉTitleƒAƒmƒe[ƒVƒ‡ƒ“‚ª•t‰Á‚³‚ê‚Ä‚¢‚½ê‡Asession‚Éƒ^ƒCƒgƒ‹î•ñ‚ğ•Û‘¶
+    /**
+     * Commandã‚¯ãƒ©ã‚¹ã«Titleã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãŒä»˜åŠ ã•ã‚Œã¦ã„ãŸå ´åˆã€sessionã«ã‚¿ã‚¤ãƒˆãƒ«æƒ…å ±ã‚’ä¿å­˜
      */
     private void setPageTitle(HttpServletRequest request, Command command) {
         Title title = command.getClass().getAnnotation(Title.class);
@@ -66,16 +71,19 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    /*
-     * session‚ÉservletPath‚ğ’Ç‰ÁBjsp‚Éforward‚³‚ê‚Ä‚©‚ç‚ÌViewHelper—p
+    /**
+     * sessionã«servletPathã‚’è¿½åŠ ã€‚jspã«forwardã•ã‚Œã¦ã‹ã‚‰ã®ViewHelperç”¨
+     * @param request
      */
     private void setServletPath(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("servletPath", request.getServletPath());
     }
 
-    /*
-     * CommandƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬ ¸”s‚µ‚½ê‡‚ÍUnknown‚Éredirect
+    /**
+     * Commandã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ å¤±æ•—ã—ãŸå ´åˆã¯Unknownã«redirect
+     * @param request
+     * @return
      */
     public Command getCommand(HttpServletRequest request) {
         String commandName = getCommandClassName(request);
@@ -86,16 +94,10 @@ public class FrontController extends HttpServlet {
         try {
             commandClass = Class.forName(commandName).asSubclass(Command.class);
             command = commandClass.newInstance();
-        } catch (ClassNotFoundException e) {
-            command = new UnknownCommand();
-            isInvalidPath = true;
-        } catch (InstantiationException e) {
-            command = new UnknownCommand();
-            isInvalidPath = true;
-        } catch (IllegalAccessException e) {
-            command = new UnknownCommand();
-            isInvalidPath = true;
         } catch (Exception e) {
+            command = new UnknownCommand();
+            isInvalidPath = true;
+        } catch (NoClassDefFoundError e) {
             command = new UnknownCommand();
             isInvalidPath = true;
         }
@@ -105,13 +107,15 @@ public class FrontController extends HttpServlet {
         return command;
     }
 
-    /*
-     * URL‚ğpackage.name.classnameCommand ‚É•ÏŠ·
+    /**
+     * URLã‚’package.name.classnameCommand ã«å¤‰æ›
+     * @param request
+     * @return
      */
     protected String getCommandClassName(HttpServletRequest request) {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getClass().getPackage().getName());
-        sb.append(".command");
+        sb.append(".app.command");
         String[] extracted = request.getServletPath().split("/");
         for (int i = 0; i < extracted.length; i++) {
             String item = extracted[i];
