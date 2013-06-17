@@ -17,6 +17,14 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.2-FINAL-20081019.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-simple-1.7.5.jar"/>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="lib" path="WEB-INF/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/servlet-api.jar"/>
+>>>>>>> ca4923be2f0b2e95dcc8bac7c886c371a8b32484
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
