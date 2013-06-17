@@ -11,7 +11,7 @@
                 <div class="controls">
                     <input type="text" class="input-middle" id="username" name="username" placeholder="username" pattern="[a-zA-Z0-9]+" required>
                     <p class="help-block">半角英数字のみ</p>
-                </div>
+                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="email">メールアドレス</label>
